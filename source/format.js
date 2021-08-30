@@ -10,21 +10,21 @@
 
 const format = (numbers, col) => {
     if (!Number.isInteger(col) || col <= 0) {
-        return null;
+        throw new Error('Number of columns must be greater than 0');
     }
 
     if (!Array.isArray(numbers)) {
-        return null;
+        throw new  Error('Numbers must only array');
     }
 
-    if (numbers.some(function(element) => {
+    if (numbers.some(function(element) {
             if (typeof(element) == 'string')
                 return element;
        })) {
-       return null;
+       throw new  Error('Elements of array must be number');
     }
 
-    let slots = numbers.reduce(function(acc, currentValue, index) {
+    const slots = numbers.reduce(function(acc, currentValue, index) {
         if (currentValue.toString().length > acc[index % col]) {
             acc[index % col] = currentValue.toString().length;
         }
@@ -32,13 +32,9 @@ const format = (numbers, col) => {
     }, new Array(col).fill(0));
 
     return numbers.reduce(function(acc, currentValue, index) {
-        const newAcc = acc + currentValue.toString().padStart(slots[index % col], " ");
-        if (index != numbers.length - 1) {
-            if ((index + 1) % col == 0) {
-                return newAcc + '\n';
-            } else {
-                return newAcc + ' ';
-            }
+        const newAcc = acc + currentValue.toString().padStart(slots[index % col]);
+        if (index !== numbers.length - 1) {
+            return newAcc + ((index + 1) % col === 0 ? '\n' : ' ');
         } else {
             return newAcc;
         }

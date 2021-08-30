@@ -110,18 +110,17 @@ QUnit.module('Тестируем функцию format', function () {
 
 	QUnit.test('format работает правильно при вводе некорректного количества колонок', function (assert) {
 		const input = [ 1, 2, 3 ];
-
-		assert.strictEqual(format(input, -2), null);
-		assert.strictEqual(format(input, 2.5), null);
-		assert.strictEqual(format(input, 'text'), null);
+		assert.throws(() => format(input, -2), Error('Number of columns must be greater than 0'));
+		assert.throws(() => format(input, 2.5), Error('Number of columns must be greater than 0'));
+		assert.throws(() => format(input, 'text'), Error('Number of columns must be greater than 0'));
 	});
 
 	QUnit.test('format работает правильно при вводе некорректного массива чисел', function (assert) {
 		const input = [ 1, 2, 'text', 3 ];
 		const input2 = 'Not array of number';
 
-		assert.strictEqual(format(input, 1), null);
-		assert.strictEqual(format(input2, 1), null);
+		assert.throws(() => format(input, 1), Error('Elements of array must be number'));
+		assert.throws(() => format(input2, 1), Error('Numbers must only array'));
 	});
 
 });
