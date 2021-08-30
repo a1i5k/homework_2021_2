@@ -17,8 +17,8 @@ const format = (numbers, col) => {
         throw new  Error('Numbers must only array');
     }
 
-    if (numbers.some((element) => {
-            if (typeof(element) == 'string')
+    if (numbers.some(element => {
+            if (typeof(element) === 'string')
                 return element;
        })) {
        throw new  Error('Elements of array must be number');
