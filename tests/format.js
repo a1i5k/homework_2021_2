@@ -108,33 +108,20 @@ QUnit.module('Тестируем функцию format', function () {
 		assert.strictEqual(format(input, 2), expected2);
 	});
 
-	QUnit.test('format работает правильно при вводе не целого количества колонок', function (assert) {
-		const input = [ 1, 2, 3 ];
-
-		assert.strictEqual(format(input, 2.5), null);
-	});
-
-	QUnit.test('format работает правильно при вводе отрицательного количества колонок', function (assert) {
-		const input = [ 1, 2, 3 ];
-
-		assert.strictEqual(format(input, -2), null);
-	});
-
 	QUnit.test('format работает правильно при вводе некорректного количества колонок', function (assert) {
 		const input = [ 1, 2, 3 ];
 
+		assert.strictEqual(format(input, -2), null);
+		assert.strictEqual(format(input, 2.5), null);
 		assert.strictEqual(format(input, 'text'), null);
 	});
 
 	QUnit.test('format работает правильно при вводе некорректного массива чисел', function (assert) {
 		const input = [ 1, 2, 'text', 3 ];
+		const input2 = 'Not array of number';
 
 		assert.strictEqual(format(input, 1), null);
+		assert.strictEqual(format(input2, 1), null);
 	});
 
-	QUnit.test('format работает правильно при вводе не массива чисел', function (assert) {
-		const input = 'Not array of number';
-
-		assert.strictEqual(format(input, 1), null);
-	});
 });

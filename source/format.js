@@ -3,12 +3,12 @@
 /**
   * Форматирует переданные целые числа в несколько колонок. Числа в получившейся таблице идут слева направо, сверху вниз
   * 
-  * @param {array number} numbers - массив чисел, которые надо отформатировать
-  * @param {integer number} col - количество колонок
+  * @param {Array} numbers - массив чисел, которые надо отформатировать
+  * @param {number} col - количество колонок
   * @returns {string}
   */
 
-const format = function (numbers, col) {
+const format = (numbers, col) => {
     if (!Number.isInteger(col) || col <= 0) {
         return null;
     }
@@ -17,41 +17,31 @@ const format = function (numbers, col) {
         return null;
     }
 
-    let slots = new Array(col).fill(0);
-
-    for(let i = 0; i < numbers.length; i++) {
-        if (typeof(numbers[i]) == 'string')
-            return null;
+    if (numbers.some(function(element) => {
+            if (typeof(element) == 'string')
+                return element;
+       })) {
+       return null;
     }
 
-    numbers.reduce(function(previousValue, currentValue, index) {
-        if (index == 1) {
-            slots[(index - 1) % col] = previousValue.toString().length;
+    let slots = numbers.reduce(function(acc, currentValue, index) {
+        if (currentValue.toString().length > acc[index % col]) {
+            acc[index % col] = currentValue.toString().length;
         }
+        return acc;
+    }, new Array(col).fill(0));
 
-        if (currentValue.toString().length > slots[index % col]) {
-            slots[index % col] = currentValue.toString().length;
-        }
-    });
-
-    return numbers.reduce(function(previousValue, currentValue, index) {
-        if (index == 1) {
-            if (index % col == 0) {
-                previousValue = ' '.repeat(slots[(index - 1) % col] - previousValue.toString().length) + previousValue + '\n';
-            } else {
-                previousValue = ' '.repeat(slots[(index - 1) % col] - previousValue.toString().length) + previousValue + ' ';
-            }
-        }
-
+    return numbers.reduce(function(acc, currentValue, index) {
+        const newAcc = acc + currentValue.toString().padStart(slots[index % col], " ");
         if (index != numbers.length - 1) {
             if ((index + 1) % col == 0) {
-                return previousValue + ' '.repeat(slots[index % col] - currentValue.toString().length) + currentValue + '\n';
+                return newAcc + '\n';
             } else {
-                return previousValue + ' '.repeat(slots[index % col] - currentValue.toString().length) + currentValue + ' ';
+                return newAcc + ' ';
             }
         } else {
-            return previousValue + ' '.repeat(slots[index % col] - currentValue.toString().length) + currentValue
+            return newAcc;
         }
-    });
+    }, '');
 }
 
