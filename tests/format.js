@@ -95,4 +95,46 @@ QUnit.module('Тестируем функцию format', function () {
 		assert.strictEqual(format(input, 2), expected2);
 		assert.strictEqual(format(input, 3), expected3);
 	});
+
+	QUnit.test('format работает правильно c несколькими колонками с отрицательными не целыми числами', function (assert) {
+		const input = [ -1.333, -2, -3, -10.555, -100, -1000, -10000, -10000 ];
+
+		const expected2 =
+			'-1.333      -2\n' +
+			'    -3 -10.555\n' +
+			'  -100   -1000\n' +
+			'-10000  -10000';
+
+		assert.strictEqual(format(input, 2), expected2);
+	});
+
+	QUnit.test('format работает правильно при вводе не целого количества колонок', function (assert) {
+		const input = [ 1, 2, 3 ];
+
+		assert.strictEqual(format(input, 2.5), null);
+	});
+
+	QUnit.test('format работает правильно при вводе отрицательного количества колонок', function (assert) {
+		const input = [ 1, 2, 3 ];
+
+		assert.strictEqual(format(input, -2), null);
+	});
+
+	QUnit.test('format работает правильно при вводе некорректного количества колонок', function (assert) {
+		const input = [ 1, 2, 3 ];
+
+		assert.strictEqual(format(input, 'text'), null);
+	});
+
+	QUnit.test('format работает правильно при вводе некорректного массива чисел', function (assert) {
+		const input = [ 1, 2, 'text', 3 ];
+
+		assert.strictEqual(format(input, 1), null);
+	});
+
+	QUnit.test('format работает правильно при вводе не массива чисел', function (assert) {
+		const input = 'Not array of number';
+
+		assert.strictEqual(format(input, 1), null);
+	});
 });
