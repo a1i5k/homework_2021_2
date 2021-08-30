@@ -17,26 +17,27 @@ const format = (numbers, col) => {
         throw new  Error('Numbers must only array');
     }
 
-    if (numbers.some(function(element) {
+    if (numbers.some((element) => {
             if (typeof(element) == 'string')
                 return element;
        })) {
        throw new  Error('Elements of array must be number');
     }
 
-    const slots = numbers.reduce(function(acc, currentValue, index) {
+    const slots = numbers.reduce((acc, currentValue, index) => {
         if (currentValue.toString().length > acc[index % col]) {
             acc[index % col] = currentValue.toString().length;
         }
         return acc;
     }, new Array(col).fill(0));
 
-    return numbers.reduce(function(acc, currentValue, index) {
-        const newAcc = acc + currentValue.toString().padStart(slots[index % col]);
+    return numbers.reduce((acc, currentValue, index) =>  {
+        acc = acc + currentValue.toString().padStart(slots[index % col]);
         if (index !== numbers.length - 1) {
-            return newAcc + ((index + 1) % col === 0 ? '\n' : ' ');
+            const endlineSymbol = (index + 1) % col === 0 ? '\n' : ' ';
+            return acc + endlineSymbol;
         } else {
-            return newAcc;
+            return acc;
         }
     }, '');
 }
