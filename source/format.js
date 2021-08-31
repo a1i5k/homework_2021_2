@@ -8,25 +8,30 @@
   * @returns {string}
   */
 
+
+const checkElementArray = (element) => {
+    if (typeof(element) !== 'number') {
+        return element;
+    }
+}
+
 const format = (numbers, col) => {
     if (!Number.isInteger(col) || col <= 0) {
         throw new Error('Number of columns must be greater than 0');
     }
 
     if (!Array.isArray(numbers)) {
-        throw new  Error('Numbers must only array');
+        throw new Error('Numbers must only array');
     }
 
-    if (numbers.some(element => {
-            if (typeof(element) === 'string')
-                return element;
-       })) {
-       throw new  Error('Elements of array must be number');
+    if (numbers.some((element) => { return checkElementArray(element); })) {
+        throw new Error('Elements of array must be number');
     }
 
     const slots = numbers.reduce((acc, currentValue, index) => {
-        if (currentValue.toString().length > acc[index % col]) {
-            acc[index % col] = currentValue.toString().length;
+        const indexCol = index % col
+        if (currentValue.toString().length > acc[indexCol]) {
+            acc[indexCol] = currentValue.toString().length;
         }
         return acc;
     }, new Array(col).fill(0));
