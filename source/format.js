@@ -29,8 +29,9 @@ const format = (numbers, col) => {
     }
 
     const slots = numbers.reduce((acc, currentValue, index) => {
-        const indexCol = index % col
-        if (currentValue.toString().length > acc[indexCol]) {
+        const indexCol = index % col;
+        const maxLenCheckingCol = acc[indexCol];
+        if (currentValue.toString().length > maxLenCheckingCol) {
             acc[indexCol] = currentValue.toString().length;
         }
         return acc;
