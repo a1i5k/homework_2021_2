@@ -1,19 +1,25 @@
 'use strict';
 
 /**
-  * Форматирует переданные целые числа в несколько колонок. Числа в получившейся таблице идут слева направо, сверху вниз
-  * 
-  * @param {Array} numbers - массив чисел, которые надо отформатировать
-  * @param {number} col - количество колонок
-  * @returns {string}
-  */
-
+ * Проверяет вляется ли аргумент числом
+ *
+ * @returns {string}
+ * @param element
+ */
 
 const checkElementArray = (element) => {
     if (typeof(element) !== 'number') {
         return element;
     }
 }
+
+/**
+ * Форматирует переданные целые числа в несколько колонок. Числа в получившейся таблице идут слева направо, сверху вниз
+ *
+ * @param {Array} numbers - массив чисел, которые надо отформатировать
+ * @param {number} col - количество колонок
+ * @returns {string}
+ */
 
 const format = (numbers, col) => {
     if (!Number.isInteger(col) || col <= 0) {
@@ -24,7 +30,7 @@ const format = (numbers, col) => {
         throw new Error('Numbers must only array');
     }
 
-    if (numbers.some((element) => { return checkElementArray(element); })) {
+    if (numbers.some((element) => checkElementArray(element))) {
         throw new Error('Elements of array must be number');
     }
 
