@@ -3,8 +3,8 @@
 /**
  * Проверяет вляется ли аргумент числом
  *
- * @returns {string}
- * @param element
+ * @returns {*} - Проверяемый элемент
+ * @param element - возвращает переданное значение в случае, если проверяемый элемент не являеться числом
  */
 
 const checkElementArray = (element) => {
