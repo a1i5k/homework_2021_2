@@ -4,19 +4,19 @@
  * Проверяет явлется ли аргумент числом
  *
  * @param {*} element - проверяемый элемент
- * @returns {string}
+ * @returns {boolean}
  */
 
 const checkElementArray = (element) => {
     if (typeof(element) !== 'number') {
-        return element;
+        return true;
     }
 }
 
 /**
  * Форматирует переданные целые числа в несколько колонок. Числа в получившейся таблице идут слева направо, сверху вниз
  *
- * @param {Array} numbers - массив чисел, которые надо отформатировать
+ * @param {number[]} numbers - массив чисел, которые надо отформатировать
  * @param {number} col - количество колонок
  * @returns {string}
  */
